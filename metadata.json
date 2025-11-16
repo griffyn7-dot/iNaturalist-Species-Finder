@@ -1,0 +1,5 @@
+{
+  "name": "iNaturalist Rarity Analyzer",
+  "description": "Find the rarest species observed by a specific user within an iNaturalist locality. This tool fetches observation data, calculates species frequency, and uses the Gemini API to provide fun facts about the rarest finds.",
+  "requestFramePermissions": []
+}
