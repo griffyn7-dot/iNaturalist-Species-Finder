@@ -19,13 +19,15 @@ const App: React.FC = () => {
       const stats = await analyzeRarity(url, username);
       const topN = stats.slice(0, 10);
 
-      const factsPromises = topN.map(s => getFunFact(s.taxon));
-      const funFacts = await Promise.all(factsPromises);
-
-      const finalResults = topN.map((stat, index) => ({
-        ...stat,
-        funFact: funFacts[index],
-      }));
+      // Fetch fun facts sequentially to avoid rate-limiting errors
+      const finalResults: RarestSpecies[] = [];
+      for (const stat of topN) {
+        const funFact = await getFunFact(stat.taxon);
+        finalResults.push({
+          ...stat,
+          funFact,
+        });
+      }
 
       setResults(finalResults);
     } catch (e) {
